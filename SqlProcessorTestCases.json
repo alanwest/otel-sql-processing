@@ -1,0 +1,66 @@
+[
+    {
+        "name": "numeric_literal_integers",
+        "sql": "SELECT 12, -12, +12",
+        "sanitized": "SELECT ?, ?, ?",
+        "dialects": [
+            "mssql"
+        ]
+    },
+    {
+        "name": "numeric_literal_with_decimal_point",
+        "sql": "SELECT 12.34, -12.34, +12.34",
+        "sanitized": "SELECT ?, ?, ?",
+        "dialects": [
+            "mssql"
+        ]
+    },
+    {
+        "name": "numeric_literal_exponential",
+        "sql": "SELECT 12.34e56, -12.34e56, +12.34e56",
+        "sanitized": "SELECT ?, ?, ?",
+        "dialects": [
+            "mssql"
+        ]
+    },
+    {
+        "name": "numeric_literal_negative_exponential",
+        "sql": "SELECT 12.34e-56, -12.34e-56, +12.34e-56",
+        "sanitized": "SELECT ?, ?, ?",
+        "dialects": [
+            "mssql"
+        ]
+    },
+    {
+        "name": "hex_literal",
+        "sql": "SELECT 0xDEADBEEF, 0XdeadBEEF",
+        "sanitized": "SELECT ?, ?",
+        "dialects": [
+            "mssql"
+        ]
+    },
+    {
+        "name": "string_literal",
+        "sql": "SELECT 'hello'",
+        "sanitized": "SELECT ?",
+        "dialects": [
+            "mssql"
+        ]
+    },
+    {
+        "name": "string_literal_escaped_single_quote",
+        "sql": "SELECT 'my name''s hello'",
+        "sanitized": "SELECT ?",
+        "dialects": [
+            "mssql"
+        ]
+    },
+    {
+        "name": "comments",
+        "sql": "SELECT column -- end of line comment\nFROM /* block \n comment */ table",
+        "sanitized": "SELECT column \nFROM  table",
+        "dialects": [
+            "mssql"
+        ]
+    }
+]
