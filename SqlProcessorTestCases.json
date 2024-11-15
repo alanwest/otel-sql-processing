@@ -49,10 +49,64 @@
     },
     {
         "name": "string_literal_escaped_single_quote",
-        "sql": "SELECT 'my name''s hello'",
+        "sql": "SELECT 'My name''s not important'",
         "sanitized": "SELECT ?",
         "dialects": [
             "mssql"
+        ]
+    },
+    {
+        "name": "string_with_embedded_newline",
+        "sql": "SELECT 'My name is \n not important'",
+        "sanitized": "SELECT ?",
+        "dialects": [
+            "mssql"
+        ]
+    },
+    {
+        "name": "numbers_in_identifiers",
+        "sql": "SELECT c3po, r2d2 FROM covid19 WHERE n1h1=1234",
+        "sanitized": "SELECT c3po, r2d2 FROM covid19 WHERE n1h1=?",
+        "dialects": [
+            "mssql"
+        ]
+    },
+    {
+        "name": "insert_into",
+        "sql": "INSERT INTO X VALUES(1, 23456, 123.456, 99+100)",
+        "sanitized": "INSERT INTO X VALUES(?, ?, ?, ??)",
+        "dialects": [
+            "mssql"
+        ],
+        "comments": [
+            "The following may also be acceptable but would require",
+            "recognizing expressions",
+            "INSERT INTO X VALUES(?, ?, ?, ?+?)"
+        ]
+    },
+    {
+        "name": "uuid",
+        "sql": "SELECT { guid  '01234567-89ab-cdef-0123-456789abcdef' }",
+        "sanitized": "SELECT { guid  ? }",
+        "dialects": [
+            "mssql"
+        ],
+        "comments": [
+            "The following may be preferable",
+            "SELECT ?"
+        ]
+    },
+    {
+        "name": "in_clause",
+        "sql": "SELECT * FROM table WHERE value IN (123, 456, 'abc')",
+        "sanitized": "SELECT * FROM table WHERE value IN (?, ?, ?)",
+        "dialects": [
+            "mssql"
+        ],
+        "comments": [
+            "The following is allowed by the spec",
+            "but not required",
+            "SELECT * FROM table WHERE value IN (?)"
         ]
     },
     {
