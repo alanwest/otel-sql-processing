@@ -9,8 +9,8 @@
     },
     {
         "name": "numeric_literal_with_decimal_point",
-        "sql": "SELECT 12.34, -12.34, +12.34",
-        "sanitized": "SELECT ?, ?, ?",
+        "sql": "SELECT 12.34, -12.34, +12.34, .01, -.01",
+        "sanitized": "SELECT ?, ?, ?, ?, ?",
         "dialects": [
             "mssql"
         ]
